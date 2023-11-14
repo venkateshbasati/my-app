@@ -18,9 +18,6 @@ const Header = () => {
 
   useEffect(() => {
     const timer = setTimeout(() =>{
-    
-    // here we are caching search queries and avoiding making already made API calls. (caching the results) 
-    // we are the results in redux store.
 
     if(searchCache[searchQuery]){
       setSearchSuggestions(searchCache[searchQuery])
@@ -37,17 +34,7 @@ const Header = () => {
     const data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
     const searchresult = await data.json();
     setSearchSuggestions(searchresult[1]);
-    /**
-     * caching results in redux store like (object format)
-     * 
-     * key-i
-     * i:[],
-     * 
-     *  key-iph
-     * iph :[iphone, iphone 12, iphone 13 , iphone latest]
-     * 
-     * 
-     */
+   
     dispatch(cacheSearchResults({
   [searchQuery]:searchSuggestions
  }))
@@ -56,21 +43,7 @@ const Header = () => {
     
   };
 
-  /**
-   *  suppoese we searching for iphone 
-   * key - i
-   * -render the component
-   * - useEffect();
-   * - start timer => mae api call after 200ms
-   * 
-   * key-ip
-   * - destroy the component( before destroying it will call useEffect return method  (unmounting the component))
-   * - re-render the component
-   * - useEffect()
-   * - start the timer=> make api call after 200ms
-   * 
-   */
-
+ 
 
   const handleToggleMenu = () => {
     dispatch(toggleMenu());
